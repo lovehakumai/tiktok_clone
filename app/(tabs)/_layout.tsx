@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Text } from 'react-native';
 
+
 export default function TabLayout() {
 
   return (
@@ -18,10 +19,31 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="friends"
         options={{
-          title: 'Explore',
-          tabBarIcon: ()=><Text>Explore</Text>
+          title: 'Friends',
+          tabBarIcon: ()=><Text>Friends</Text>
+        }}
+      />
+      <Tabs.Screen
+        name="camera"
+        options={{
+          title: 'Camera',
+          tabBarIcon: ()=><Text>Camera</Text>
+        }}
+      />
+      <Tabs.Screen
+        name="inbox"
+        options={{
+          title: 'Inbox',
+          tabBarIcon: ()=><Text>Inbox</Text>
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: ()=><Text>Profile</Text>
         }}
       />
     </Tabs>
