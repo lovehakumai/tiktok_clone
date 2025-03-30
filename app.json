@@ -37,6 +37,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c2f30144-62d5-447f-94aa-9e54d110fda8"
+      }
+    },
+    "owner": "masaharu_ura"
   }
 }
