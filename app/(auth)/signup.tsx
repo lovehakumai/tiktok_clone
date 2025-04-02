@@ -37,6 +37,11 @@ export default function () {
         >
           <Text className='text-white font-bold text-lg text-center'>Signup</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={()=>router.push("/")}
+        >
+          <Text className='text-black font-semibold text-lg text-center mt-3'>Login</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
