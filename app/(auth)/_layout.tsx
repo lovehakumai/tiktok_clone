@@ -10,8 +10,15 @@ import 'react-native-reanimated';
 export default function () {
   return (
       <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="signup" options={{ headerShown: false, presentation: "modal"}} />
+        <Stack.Screen name="index" options={{ headerShown: false}} />
+        <Stack.Screen 
+          name="signup" 
+          options={{ 
+            headerShown: false, 
+            presentation: "modal", 
+            contentStyle: { backgroundColor: 'rgba(0, 0, 0, 0.5)' }, // 背景を半透明に
+          }} 
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
   );
