@@ -38,7 +38,7 @@ export default function () {
         />
         <TouchableOpacity 
           className='bg-black px-4 py-2 rounded-lg'
-          onPress={() =>signIn(email, password)}
+          onPress={()=>signIn(email, password)}
         >
           <Text className='text-white font-bold text-lg text-center'>Login</Text>
         </TouchableOpacity>

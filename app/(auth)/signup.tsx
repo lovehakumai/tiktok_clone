@@ -4,40 +4,14 @@ import "../../global.css";
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { supabase } from '@/utils/supabase';
+import { useAuth } from '@/providers/AuthProvider';
 
 export default function () {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-
-  const handleSignup = async() => {
-    console.log(email, password);
-
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-    console.log(JSON.stringify(data));
-    
-    const {error: userError} = await supabase.from('User').insert({
-      id: data.user?.id,
-      email: email,
-      username: userName
-    });
-
-    if(userError){
-      console.error(userError);
-      return;
-    }
-    router.back();
-    router.push('/(tabs)')
-  }
+  const { signUp } = useAuth();
 
   return (
     <View className='flex-1 items-center justify-center bg-white'>
@@ -64,7 +38,7 @@ export default function () {
         />
         <TouchableOpacity 
           className='bg-black px-4 py-2 rounded-lg'
-          onPress={handleSignup}
+          onPress={()=>signUp(userName, email, password)}
         >
           <Text className='text-white font-bold text-lg text-center'>Signup</Text>
         </TouchableOpacity>

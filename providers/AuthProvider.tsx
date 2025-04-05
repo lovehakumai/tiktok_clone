@@ -1,6 +1,6 @@
 import { supabase } from "@/utils/supabase";
 import { useRouter } from "expo-router";
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext({
   user: null,
@@ -39,37 +39,49 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const signUp = async (username: string, email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-    if (error) {
-      console.error(error);
-      return;
-    }
-    const { data: userData, error: userError } = await supabase.from("User").insert({
-      id: data.user?.id,
-      email: email,
-      username: username,
-    });
-    if (userError) {
-      console.error(userError);
-      return;
-    }
-    setUser(userData);
-    router.back();
-    router.push("/(tabs)");
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+        });
+        if (error) {
+            console.error(error);
+            return;
+        }
+        const { data: userData, error: userError } = await supabase.from("User").insert({
+            id: data.user?.id,
+            email: email,
+            username: username,
+        });
+        if (userError) {
+            console.error(userError);
+            return;
+        }
+        setUser(userData);
+        router.back();
+        router.push("/(tabs)");
     };
 
     const signOut = async () => {
         const { error } = await supabase.auth.signOut();
         if (error) {
-        console.error(error);
-        return;
+            console.error(error);
+            return;
         }
         setUser(null);
         router.push("/(auth)");
     };
+
+    useEffect(() => {
+        const {data: authData} = supabase.auth.onAuthStateChange(async (event, session) => {
+            if(!session){
+                return router.push("/(auth)");
+            }
+            getUser(session?.user?.id);
+          })
+          return () => {
+            authData.subscription.unsubscribe();
+          };
+      }, []);
 
   return (
     <AuthContext.Provider value={{ user, signIn, signUp, signOut }}>
