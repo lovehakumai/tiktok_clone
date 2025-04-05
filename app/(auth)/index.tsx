@@ -2,22 +2,27 @@
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import "../../global.css";
 import { Link, useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { supabase } from '@/utils/supabase';
+import { AuthContext, useAuth } from '@/providers/AuthProvider';
 
 export default function () {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    console.log(email, password);
-    
-  }
+  const [userName, setUserName] = useState("");
+  const { signIn } = useAuth();
 
   return (
     <View className='flex-1 items-center justify-center bg-white'>
       <View className='w-full p-4'>
         <Text className='text-black font-bold text-3xl text-center mb-4'>Login</Text>
+        <TextInput 
+            placeholder='Username'
+            value={userName}
+            onChangeText={setUserName}
+            className='bg-white p-4 rounded-lg border border-gray-300 w-full mb-4'
+        />
         <TextInput 
             placeholder='Email'
             value={email}
@@ -33,7 +38,7 @@ export default function () {
         />
         <TouchableOpacity 
           className='bg-black px-4 py-2 rounded-lg'
-          onPress={handleLogin}
+          onPress={()=>signIn(email, password)}
         >
           <Text className='text-white font-bold text-lg text-center'>Login</Text>
         </TouchableOpacity>
